@@ -52,7 +52,7 @@ export default function PersonalPage({ bridesmaid }) {
   const [heartSent, setHeartSent] = useState(bridesmaid.heartSent || false);
   const [memeVisible, setMemeVisible] = useState(false);
 
-  const weddingDate = "2026-12-14T10:00:00";
+  const weddingDate = "2026-09-26T10:00:00";
 
   async function handleRsvp(answer) {
     setRsvp(answer);
@@ -292,7 +292,7 @@ export default function PersonalPage({ bridesmaid }) {
                       <div style={{ fontSize: "64px" }}>😱</div>
                     )}
                     <p className="text-white font-medium" style={{ fontSize: "16px" }}>
-                      "you wan shame me ke?" 😅
+                      "you wan shame me ke?"
                     </p>
                     <p className="playfair italic" style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px" }}>
                       oya think about it again...
@@ -300,7 +300,7 @@ export default function PersonalPage({ bridesmaid }) {
                     <button onClick={handleRetry}
                       className="px-8 py-3 rounded-full font-medium transition-all hover:scale-105"
                       style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px" }}>
-                      OK fine, I changed my mind 😢
+                      OK fine, I changed my mind
                     </button>
                   </div>
                 )}
