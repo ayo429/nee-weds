@@ -81,161 +81,234 @@ export default function PersonalPage({ bridesmaid }) {
     setRsvp("");
   }
 
+  const hasAnsweredYes = rsvp === "yes";
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
 
       {/* Background */}
-<div className="absolute inset-0 z-0">
-  {rsvp === "yes" && bridesmaid.celebrationBgUrl ? (
-    <img src={bridesmaid.celebrationBgUrl} alt="celebration"
-      className="w-full h-full object-cover object-center"
-      style={{ transition: "all 0.8s ease" }} />
-  ) : bridesmaid.photoUrl ? (
-    <img src={bridesmaid.photoUrl} alt={bridesmaid.name}
-      className="w-full h-full object-cover object-top" />
-  ) : (
-    <div className="w-full h-full"
-      style={{ background: "linear-gradient(160deg, #D42B60 0%, #8B1A3A 50%, #3A0A1A 100%)" }} />
-  )}
-  <div className="absolute inset-0"
-    style={{ background: rsvp === "yes" ? "rgba(0,0,0,0.25)" : "rgba(0,0,0,0.45)", transition: "all 0.8s ease" }} />
-</div>
+      <div className="absolute inset-0 z-0">
+        {hasAnsweredYes && bridesmaid.celebrationBgUrl ? (
+          <img src={bridesmaid.celebrationBgUrl} alt="celebration"
+            className="w-full h-full object-cover object-center"
+            style={{ transition: "all 0.8s ease" }} />
+        ) : bridesmaid.photoUrl ? (
+          <img src={bridesmaid.photoUrl} alt={bridesmaid.name}
+            className="w-full h-full object-cover object-center" />
+        ) : (
+          <div className="w-full h-full"
+            style={{ background: "linear-gradient(160deg, #D42B60 0%, #8B1A3A 50%, #3A0A1A 100%)" }} />
+        )}
+        <div className="absolute inset-0"
+          style={{ background: hasAnsweredYes ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.68)", transition: "background 0.8s ease" }} />
+      </div>
 
       <FloatingRoses />
 
-      {/* Page content — centered column */}
-      <div className="relative z-10 flex flex-col items-center min-h-screen pb-8 pt-4">
+      {/* YES STATE — arc photo + gratitude message */}
+      {hasAnsweredYes && (
+        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-10"
+          style={{ animation: "fadeUp 0.6s ease both" }}>
 
-        {/* Header */}
-        <div className="text-center pt-8 pb-3 px-5 w-full">
-          <h1 className="playfair italic text-white mt-2"
-            style={{ fontSize: "clamp(36px, 9vw, 50px)", textShadow: "0 4px 24px rgba(0,0,0,0.4)", lineHeight: 1.1 }}>
-            {bridesmaid.name}
-          </h1>
-          <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginTop: "6px" }}>
-            {bridesmaid.role}
-          </p>
-        </div>
-
-        {/* Countdown */}
-        <Countdown weddingDate={weddingDate} />
-
-        {/* Cards container — max width centered */}
-        <div className="w-full px-5 flex flex-col gap-5" style={{ maxWidth: "640px" }}>
-
-          {/* Bride's message card */}
-          <div className="rounded-3xl"
-            style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)" }}>
-            <div style={{ padding: "32px 36px" }}>
-              <p style={{ fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#FFB3C6", marginBottom: "16px", fontWeight: 500 }}>
-                ✦ A message from the bride ✦
-              </p>
-              <p className="playfair italic text-white leading-loose" style={{ fontSize: "15px" }}>
-                "{bridesmaid.message}"
-              </p>
-              <p className="playfair italic text-right mt-5" style={{ color: "#FFB3C6", fontSize: "13px" }}>
-                — Neemah, with all my love 🌹
-              </p>
-              <div className="my-5" style={{ height: "0.5px", background: "rgba(255,255,255,0.12)" }} />
-              <button
-                onClick={handleHeart}
-                disabled={heartSent}
-                className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105"
+          {/* Arc photo */}
+          <div className="relative mb-6" style={{ width: "180px", height: "200px" }}>
+            <div style={{
+              position: "absolute", inset: "-4px",
+              borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
+              background: "rgba(255,255,255,0.25)", zIndex: 0,
+            }} />
+            <div style={{
+              position: "absolute", inset: "-2px",
+              borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
+              border: "2.5px solid rgba(255,255,255,0.7)", zIndex: 2,
+              pointerEvents: "none",
+            }} />
+            {bridesmaid.celebrationBgUrl ? (
+              <img
+                src={bridesmaid.celebrationBgUrl}
+                alt="celebration"
                 style={{
-                  background: heartSent ? "#D42B60" : "rgba(255,255,255,0.12)",
-                  color: "#fff",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  cursor: heartSent ? "default" : "pointer",
-                  letterSpacing: "0.04em",
-                }}>
-                <span style={{ fontSize: "16px" }}>{heartSent ? "✓" : "❤️"}</span>
-                <span>{heartSent ? "Love sent!" : "Send love back"}</span>
-              </button>
-            </div>
+                  width: "100%", height: "100%",
+                  objectFit: "cover", objectPosition: "center top",
+                  borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
+                  position: "relative", zIndex: 1,
+                }}
+              />
+            ) : (
+              <div style={{
+                width: "100%", height: "100%",
+                borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%",
+                background: "linear-gradient(160deg, #D42B60, #8B1A3A)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "48px", position: "relative", zIndex: 1,
+              }}>🌹</div>
+            )}
           </div>
 
-          {/* RSVP card */}
-          <div className="rounded-3xl"
-            style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)" }}>
-            <div style={{ padding: "24px 36px" }} className="flex flex-col items-center text-center">
-
-              {/* Question */}
-              {rsvp === "" && !memeVisible && (
-                <>
-                  <span style={{ fontSize: "32px", marginBottom: "10px" }}>🌹</span>
-                  <p className="playfair italic text-white mb-2" style={{ fontSize: "20px", lineHeight: 1.3 }}>
-                    "Will you be my bridesmaid?"
-                  </p>
-                  <p className="playfair italic mb-6" style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px" }}>
-                    — asked with all my heart, Neemah
-                  </p>
-                  <div className="flex gap-4 justify-center mt-2">
-                    <button
-                      onClick={() => handleRsvp("yes")}
-                      className="rounded-full text-white font-medium transition-all hover:scale-105 active:scale-95"
-                      style={{ background: "#D42B60", fontSize: "14px", padding: "9px 36px", letterSpacing: "0.04em" }}>
-                      Yes! ❤️
-                    </button>
-                    <button
-                      onClick={() => handleRsvp("no")}
-                      className="rounded-full font-medium transition-all hover:scale-105 active:scale-95"
-                      style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1.5px solid rgba(255,255,255,0.35)", fontSize: "14px", padding: "9px 36px" }}>
-                      No
-                    </button>
-                  </div>
-                </>
-              )}
-
-              {/* YES */}
-              {rsvp === "yes" && (
-                <div style={{ animation: "popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both" }}
-                  className="flex flex-col items-center gap-4">
-                  <div style={{ fontSize: "32px", animation: "heartbeat 1s ease-in-out infinite" }}>
-                    ❤️ 🌹 ❤️
-                  </div>
-                  <p className="playfair italic text-white leading-relaxed" style={{ fontSize: "19px", maxWidth: "300px" }}>
-                    "She said YES! 🎉 Welcome to the most beautiful squad, my love. This day just got even more magical."
-                  </p>
-                  <div style={{ fontSize: "26px", animation: "heartbeat 1.2s ease-in-out 0.2s infinite" }}>
-                    🌹 ❤️ 🌹
-                  </div>
-                </div>
-              )}
-
-              {/* NO — meme */}
-              {memeVisible && (
-                <div style={{ animation: "popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both" }}
-                  className="flex flex-col items-center gap-4">
-                  {bridesmaid.memeUrl ? (
-                    <img
-                      src={bridesmaid.memeUrl}
-                      alt="meme"
-                      className="rounded-2xl mx-auto"
-                      style={{ width: "220px", height: "200px", objectFit: "cover" }}
-                    />
-                  ) : (
-                    <div style={{ fontSize: "64px" }}>😱</div>
-                  )}
-                  <p className="text-white font-medium" style={{ fontSize: "16px" }}>
-                    "you wan shame me ke?"
-                  </p>
-                  <p className="playfair italic" style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px" }}>
-                    oya think about it again...
-                  </p>
-                  <button
-                    onClick={handleRetry}
-                    className="px-8 py-3 rounded-full font-medium transition-all hover:scale-105"
-                    style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px" }}>
-                    OK fine, I changed my mind
-                  </button>
-                </div>
-              )}
-
-            </div>
+          {/* Hearts */}
+          <div className="flex gap-2 mb-5"
+            style={{ animation: "heartbeat 1s ease-in-out infinite" }}>
+            <span style={{ fontSize: "24px" }}>❤️</span>
+            <span style={{ fontSize: "24px" }}>🌹</span>
+            <span style={{ fontSize: "24px" }}>❤️</span>
           </div>
 
+          {/* Gratitude message card */}
+          <div className="w-full rounded-3xl text-center"
+            style={{
+              maxWidth: "500px",
+              background: "rgba(0,0,0,0.35)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              backdropFilter: "blur(12px)",
+              padding: "32px 36px"
+            }}>
+            <p style={{ fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#FFB3C6", marginBottom: "16px", fontWeight: 500 }}>
+              ✦ She said YES! ✦
+            </p>
+            <p className="playfair italic text-white leading-loose" style={{ fontSize: "16px" }}>
+              "I love you and I have always waited for this day to come. You just made me the happiest bride in the world. I cannot wait to stand beside you, laugh with you and cry happy tears together. We are doing this!"
+            </p>
+            <p className="playfair italic text-right mt-5" style={{ color: "#FFB3C6", fontSize: "13px" }}>
+              — Neemah, with all my love 🌹
+            </p>
+
+            <div style={{ height: "0.5px", background: "rgba(255,255,255,0.12)", margin: "20px 0" }} />
+
+            <button
+              onClick={handleHeart}
+              disabled={heartSent}
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 mx-auto"
+              style={{
+                background: heartSent ? "#D42B60" : "rgba(255,255,255,0.12)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.25)",
+                cursor: heartSent ? "default" : "pointer",
+                letterSpacing: "0.04em",
+              }}>
+              <span style={{ fontSize: "16px" }}>{heartSent ? "✓" : "❤️"}</span>
+              <span>{heartSent ? "Love sent!" : "Send love back"}</span>
+            </button>
+          </div>
+
+          {/* Countdown */}
+          <div className="mt-6 w-full" style={{ maxWidth: "500px" }}>
+            <Countdown weddingDate={weddingDate} />
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* DEFAULT STATE — message + RSVP */}
+      {!hasAnsweredYes && (
+        <div className="relative z-10 flex flex-col items-center min-h-screen pb-8">
+
+          {/* Header */}
+          <div className="text-center pt-8 pb-3 px-5 w-full">
+            <h1 className="playfair italic text-white mt-1"
+              style={{ fontSize: "clamp(36px, 9vw, 50px)", textShadow: "0 4px 24px rgba(0,0,0,0.4)", lineHeight: 1.1 }}>
+              {bridesmaid.name}
+            </h1>
+            <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginTop: "4px" }}>
+              {bridesmaid.role}
+            </p>
+          </div>
+
+          {/* Countdown */}
+          <Countdown weddingDate={weddingDate} />
+
+          {/* Cards */}
+          <div className="w-full px-5 flex flex-col gap-5" style={{ maxWidth: "640px" }}>
+
+            {/* Bride's message card */}
+            <div className="rounded-3xl"
+              style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)" }}>
+              <div style={{ padding: "32px 36px" }}>
+                <p style={{ fontSize: "10px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#FFB3C6", marginBottom: "16px", fontWeight: 500 }}>
+                  ✦ A message from the bride ✦
+                </p>
+                <p className="playfair italic text-white leading-loose" style={{ fontSize: "15px" }}>
+                  "{bridesmaid.message}"
+                </p>
+                <p className="playfair italic text-right mt-5" style={{ color: "#FFB3C6", fontSize: "13px" }}>
+                  — Neemah, with all my love 🌹
+                </p>
+                <div style={{ height: "0.5px", background: "rgba(255,255,255,0.12)", margin: "20px 0" }} />
+                <button
+                  onClick={handleHeart}
+                  disabled={heartSent}
+                  className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105"
+                  style={{
+                    background: heartSent ? "#D42B60" : "rgba(255,255,255,0.12)",
+                    color: "#fff",
+                    border: "1px solid rgba(255,255,255,0.25)",
+                    cursor: heartSent ? "default" : "pointer",
+                    letterSpacing: "0.04em",
+                  }}>
+                  <span style={{ fontSize: "16px" }}>{heartSent ? "✓" : "❤️"}</span>
+                  <span>{heartSent ? "Love sent!" : "Send love back"}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* RSVP card */}
+            <div className="rounded-3xl"
+              style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.15)", backdropFilter: "blur(12px)" }}>
+              <div style={{ padding: "24px 36px" }} className="flex flex-col items-center text-center">
+
+                {rsvp === "" && !memeVisible && (
+                  <>
+                    <span style={{ fontSize: "32px", marginBottom: "10px" }}>🌹</span>
+                    <p className="playfair italic text-white mb-2" style={{ fontSize: "20px", lineHeight: 1.3 }}>
+                      "Will you be my bridesmaid?"
+                    </p>
+                    <p className="playfair italic mb-6" style={{ color: "rgba(255,255,255,0.55)", fontSize: "13px" }}>
+                      — asked with all my heart, Neemah
+                    </p>
+                    <div className="flex gap-4 justify-center mt-2">
+                      <button
+                        onClick={() => handleRsvp("yes")}
+                        className="rounded-full text-white font-medium transition-all hover:scale-105 active:scale-95"
+                        style={{ background: "#D42B60", fontSize: "14px", padding: "9px 36px", letterSpacing: "0.04em" }}>
+                        Yes! ❤️
+                      </button>
+                      <button
+                        onClick={() => handleRsvp("no")}
+                        className="rounded-full font-medium transition-all hover:scale-105 active:scale-95"
+                        style={{ background: "rgba(255,255,255,0.12)", color: "#fff", border: "1.5px solid rgba(255,255,255,0.35)", fontSize: "14px", padding: "9px 36px" }}>
+                        No
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {/* NO — meme */}
+                {memeVisible && (
+                  <div style={{ animation: "popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both" }}
+                    className="flex flex-col items-center gap-4">
+                    {bridesmaid.memeUrl ? (
+                      <img src={bridesmaid.memeUrl} alt="meme"
+                        className="rounded-2xl mx-auto"
+                        style={{ width: "220px", height: "200px", objectFit: "cover" }} />
+                    ) : (
+                      <div style={{ fontSize: "64px" }}>😱</div>
+                    )}
+                    <p className="text-white font-medium" style={{ fontSize: "16px" }}>
+                      "you wan shame me ke?" 😅
+                    </p>
+                    <p className="playfair italic" style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px" }}>
+                      oya think about it again...
+                    </p>
+                    <button onClick={handleRetry}
+                      className="px-8 py-3 rounded-full font-medium transition-all hover:scale-105"
+                      style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px" }}>
+                      OK fine, I changed my mind 😢
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @keyframes popIn {
@@ -245,6 +318,10 @@ export default function PersonalPage({ bridesmaid }) {
         @keyframes heartbeat {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.3); }
+        }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
