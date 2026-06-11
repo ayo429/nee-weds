@@ -113,7 +113,7 @@ export default function AdminPage() {
               value={pw}
               onChange={e => setPw(e.target.value)}
               className="text-center outline-none rounded-full"
-              style={{ width: "240px", padding: "12px 24px", background: "#FFF0F5", border: "1.5px solid rgba(212,43,96,0.2)", fontSize: "15px", fontFamily: "'DM Sans', sans-serif" }}
+              style={{ width: "240px", padding: "12px 24px", background: "#FFF0F5", border: "1.5px solid rgba(212,43,96,0.2)", fontSize: "16px", fontFamily: "'DM Sans', sans-serif" }}
             />
             {pwError && <p style={{ color: "#D42B60", fontSize: "12px" }}>{pwError}</p>}
             <button type="submit"

@@ -149,7 +149,7 @@ export default function ChatPage() {
               onChange={e => setAdminPw(e.target.value)}
               onKeyDown={e => e.key === "Enter" && adminPw === ADMIN_PASSWORD && setAdminAuthed(true)}
               className="text-center outline-none rounded-full"
-              style={{ width: "220px", padding: "12px 24px", background: "#FFF0F5", border: "1.5px solid rgba(212,43,96,0.2)", fontSize: "14px", fontFamily: "'DM Sans', sans-serif" }} />
+              style={{ width: "220px", padding: "12px 24px", background: "#FFF0F5", border: "1.5px solid rgba(212,43,96,0.2)", fontSize: "16px", fontFamily: "'DM Sans', sans-serif" }} />
             <button onClick={() => { if (adminPw === ADMIN_PASSWORD) setAdminAuthed(true); }}
               className="flex items-center gap-2 rounded-full text-white font-medium transition-all hover:scale-105"
               style={{ background: "#D42B60", padding: "12px 36px", fontSize: "14px" }}>
@@ -215,7 +215,7 @@ export default function ChatPage() {
           <p style={{ fontSize: "12px", color: "#fff" }}>🔔 Enable notifications to know when someone messages</p>
           <button onClick={requestNotifPermission}
             className="rounded-full text-white font-medium ml-3"
-            style={{ background: "rgba(255,255,255,0.25)", padding: "4px 12px", fontSize: "11px", flexShrink: 0 }}>
+            style={{ background: "rgba(255,255,255,0.25)", padding: "8px 18px", fontSize: "13px", flexShrink: 0, minHeight: "36px", minWidth: "64px" }}>
             Allow
           </button>
         </div>
@@ -370,7 +370,7 @@ export default function ChatPage() {
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } }}
               placeholder="Type a message..."
               className="w-full outline-none bg-transparent"
-              style={{ fontSize: "14px", fontFamily: "'DM Sans', sans-serif", color: "#2C1810", border: "none" }}
+              style={{ fontSize: "16px", fontFamily: "'DM Sans', sans-serif", color: "#2C1810", border: "none" }}
             />
           </div>
 
