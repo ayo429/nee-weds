@@ -43,18 +43,6 @@ export default function Landing() {
       <FloatingRoses />
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-10">
-
-        {/* Top text */}
-        <div className="text-center mb-10">
-          <p className="playfair italic text-white/80 text-sm tracking-widest mb-2">
-            you are cordially invited
-          </p>
-          <h1 className="playfair italic text-white"
-            style={{ fontSize: "clamp(36px, 8vw, 56px)", textShadow: "0 2px 16px rgba(180,40,80,0.22)", lineHeight: 1.1 }}>
-            Muslim & Neemah
-          </h1>
-        </div>
-
         {/* ENVELOPE */}
         {!showForm && (
           <div style={{ animation: "floatenv 4s ease-in-out infinite" }}>
