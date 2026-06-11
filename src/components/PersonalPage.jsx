@@ -52,7 +52,7 @@ export default function PersonalPage({ bridesmaid }) {
   const [heartSent, setHeartSent] = useState(bridesmaid.heartSent || false);
   const [memeVisible, setMemeVisible] = useState(false);
 
-  const weddingDate = "2026-09-26T10:00:00";
+  const weddingDate = "2026-12-14T10:00:00";
 
   async function handleRsvp(answer) {
     setRsvp(answer);
@@ -188,6 +188,24 @@ export default function PersonalPage({ bridesmaid }) {
               <span style={{ fontSize: "16px" }}>{heartSent ? "✓" : "❤️"}</span>
               <span>{heartSent ? "Love sent!" : "Send love back"}</span>
             </button>
+
+            {/* Chat button */}
+            <button
+              onClick={() => {
+                // Store bridesmaid name in sessionStorage as backup
+                sessionStorage.setItem('bridesmaidName', bridesmaid.name);
+                window.location.href = `/chat/${bridesmaid.id}`;
+              }}
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 mt-3"
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.3)",
+                letterSpacing: "0.04em",
+              }}>
+              <span style={{ fontSize: "16px" }}>💬</span>
+              <span>Join the bridal squad chat</span>
+            </button>
           </div>
 
           {/* Countdown */}
@@ -300,7 +318,7 @@ export default function PersonalPage({ bridesmaid }) {
                     <button onClick={handleRetry}
                       className="px-8 py-3 rounded-full font-medium transition-all hover:scale-105"
                       style={{ background: "rgba(255,255,255,0.15)", color: "#fff", border: "1px solid rgba(255,255,255,0.3)", fontSize: "14px" }}>
-                      OK fine, I changed my mind
+                      OK fine, I changed my mind 
                     </button>
                   </div>
                 )}

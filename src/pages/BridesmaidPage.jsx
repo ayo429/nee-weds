@@ -10,7 +10,12 @@ export default function BridesmaidPage() {
   const navigate = useNavigate();
   const [bridesmaid, setBridesmaid] = useState(location.state?.bridesmaid || null);
   const [loading, setLoading] = useState(!location.state?.bridesmaid);
-  const [revealed, setRevealed] = useState(false);
+
+  // Remember if this bridesmaid has already seen the reveal
+  const revealKey = `revealed_${id}`;
+  const [revealed, setRevealed] = useState(
+    () => sessionStorage.getItem(revealKey) === "true"
+  );
 
   useEffect(() => {
     if (!bridesmaid) {
@@ -21,6 +26,11 @@ export default function BridesmaidPage() {
       });
     }
   }, [id]);
+
+  function handleEnter() {
+    sessionStorage.setItem(revealKey, "true");
+    setRevealed(true);
+  }
 
   if (loading) {
     return (
@@ -38,10 +48,7 @@ export default function BridesmaidPage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden">
       {!revealed ? (
-        <Reveal
-          bridesmaid={bridesmaid}
-          onEnter={() => setRevealed(true)}
-        />
+        <Reveal bridesmaid={bridesmaid} onEnter={handleEnter} />
       ) : (
         <PersonalPage bridesmaid={bridesmaid} />
       )}

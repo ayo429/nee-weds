@@ -43,7 +43,7 @@ export default function Landing() {
       <FloatingRoses />
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-10">
-
+        
         {/* ENVELOPE */}
         {!showForm && (
           <div style={{ animation: "floatenv 4s ease-in-out infinite" }}>
@@ -158,6 +158,14 @@ export default function Landing() {
             </button>
           </div>
         )}
+      </div>
+
+      {/* Discreet admin link */}
+      <div className="absolute bottom-4 right-4 z-20">
+        <a href="/admin"
+          style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.08em" }}>
+          admin
+        </a>
       </div>
 
       <style>{`
